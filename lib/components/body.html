@@ -1,9 +1,9 @@
 <dimension class="btn btn-default"
            *ngFor="#dimension of dimensions"
-           (click)="onClick(dimension.name)"
+           (click)="onClick(dimension)"
            [class.active]="isActive(dimension)"
 >
-  <div style="flex: 1;">{{dimension.name}}</div>
+  <div style="flex: 1;">{{dimension}}</div>
   <div>{{getTotalDuration(dimension)}}</div>
 </dimension>
 

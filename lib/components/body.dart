@@ -14,15 +14,14 @@ class BodyComponent {
 
   List<TimeRecord> get timeRecords => _myService.timeRecords;
 
-  void onClick(String dimensionClicked) {
-    _myService.dimensionIsClicked(dimensionClicked);
-
-    print(_myService.getActiveDimension());
+  void onClick(Dimension dimension) {
+    _myService.dimensionIsClicked(dimension);
   }
 
   Dimension getActiveDimension() => _myService.getActiveDimension();
 
-  bool isActive(Dimension dimension) => dimension == getActiveDimension();
+  bool isActive(Dimension dimension) =>
+      dimension == _myService.getActiveDimension();
 
   String getTotalDuration(Dimension dimension) {
     final duration = _myService.getTotalDuration(dimension);

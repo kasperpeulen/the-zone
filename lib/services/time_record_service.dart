@@ -18,7 +18,7 @@ class TimeRecordService {
     return timeRecords.last;
   }
 
-  void dimensionIsClicked(String dimensionClicked) {
+  void dimensionIsClicked(Dimension dimensionClicked) {
     TimeRecord currentRecord = getCurrentRecord();
     if (currentRecord != null) {
       // end the record
@@ -36,14 +36,7 @@ class TimeRecordService {
     print(timeRecords);
   }
 
-  Dimension getActiveDimension() {
-    for (Dimension dimension in Dimension.all) {
-      if (_isDimensionActive(dimension)) {
-        return dimension;
-      }
-    }
-    return null;
-  }
+  Dimension getActiveDimension() => getCurrentRecord()?.dimension;
 
   Duration getTotalDuration(Dimension dimension) {
     Duration duration = new Duration(seconds: 0);
@@ -53,13 +46,5 @@ class TimeRecordService {
       }
     }
     return duration;
-  }
-
-  bool _isDimensionActive(Dimension dimension) {
-    TimeRecord currentRecord = getCurrentRecord();
-    if (currentRecord == null) {
-      return false;
-    }
-    return (currentRecord.dimension == dimension);
   }
 }
