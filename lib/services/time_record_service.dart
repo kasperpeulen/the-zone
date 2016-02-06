@@ -12,16 +12,13 @@ class TimeRecordService {
       recordings.isEmpty || recordings.last.hasEnded ? null : recordings.last;
 
   void dimensionIsClicked(Dimension dimension) {
-    TimeRecord current = currentRecord;
     if (currentRecord != null) {
       // end the record
-      current.endedAt = new DateTime.now();
+      currentRecord.endedAt = new DateTime.now();
 
       // don't create a new timer when the dimension clicked
       // is the same as the currentRecord
-      if (current.dimension == dimension) {
-        return;
-      }
+      if (recordings.last.dimension == dimension) return;
     }
 
     recordings.add(
