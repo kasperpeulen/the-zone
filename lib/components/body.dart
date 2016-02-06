@@ -24,6 +24,10 @@ class BodyComponent {
 
   bool isActive(Dimension dimension) => dimension == getActiveDimension();
 
-  Duration getTotalDuration(String dimension) =>
-      _myService.getTotalDuration(dimension);
+  String getTotalDuration(Dimension dimension) {
+    final duration = _myService.getTotalDuration(dimension);
+    return '${duration.inHours.toString().padLeft(2, '0')}'
+        ':${(duration.inMinutes % 60).toString().padLeft(2, '0')}'
+        ':${(duration.inSeconds % 60).toString().padLeft(2, '0')}';
+  }
 }
