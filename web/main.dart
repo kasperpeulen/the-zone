@@ -3,16 +3,17 @@ import 'dart:async';
 import 'package:angular2/bootstrap.dart';
 import 'package:angular2/angular2.dart';
 import 'package:the_zone/components/body.dart';
-import 'package:the_zone/services/my_service.dart';
+import 'package:the_zone/services/time_record_service.dart';
 import 'package:firebase/firebase.dart';
 import 'package:github/browser.dart';
 import 'package:the_zone/services/user_service.dart';
+
 
 Future main() async {
   final firebase = new Firebase('http://mathedit.firebaseio.com/');
 
   bootstrap(BodyComponent, [
-    MyService,
+    TimeRecordService,
     UserService,
     provide(Firebase, useValue: firebase),
     provide(Authentication, useValue: await bootstrapAuth(firebase)),
