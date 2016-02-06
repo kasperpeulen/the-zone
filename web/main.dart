@@ -6,15 +6,15 @@ import 'package:the_zone/components/body.dart';
 import 'package:the_zone/services/time_record_service.dart';
 import 'package:firebase/firebase.dart';
 import 'package:github/browser.dart';
-import 'package:the_zone/services/user_service.dart';
+import 'package:the_zone/services/auth_service.dart';
 
 
 Future main() async {
-  final firebase = new Firebase('http://mathedit.firebaseio.com/');
+  final firebase = new Firebase('http://the-zone.firebaseio.com/');
 
   bootstrap(BodyComponent, [
     TimeRecordService,
-    UserService,
+    AuthService,
     provide(Firebase, useValue: firebase),
     provide(Authentication, useValue: await bootstrapAuth(firebase)),
     provide(GitHub,

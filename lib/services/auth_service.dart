@@ -6,7 +6,7 @@ import 'dart:async';
 
 
 @Injectable()
-class UserService {
+class AuthService {
   final Firebase _firebase;
   final GitHub _gitHub;
   final Authentication _auth;
@@ -16,7 +16,7 @@ class UserService {
   /// May be null.
   CurrentUser get user => _user;
 
-  UserService(this._gitHub, this._firebase, this._auth) {
+  AuthService(this._gitHub, this._firebase, this._auth) {
     if (_gitHub.auth.isToken) {
       _gitHub.users.getCurrentUser().then((user) => _user = user);
     }
@@ -31,5 +31,5 @@ class UserService {
     window.location.reload();
   }
 
-  bool get loggedIn => _auth.isAnonymous ? false : true;
+  bool get isLoggedIn => _auth.isAnonymous ? false : true;
 }

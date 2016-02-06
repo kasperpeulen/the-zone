@@ -2,16 +2,16 @@ import 'package:angular2/core.dart';
 import 'package:the_zone/models/dimension.dart';
 import 'package:the_zone/services/time_record_service.dart';
 import 'package:the_zone/models/time_record.dart';
-import 'package:the_zone/services/user_service.dart';
+import 'package:the_zone/services/auth_service.dart';
 import 'dart:async';
 
 @Component(
     selector: 'body', templateUrl: 'body.html', styleUrls: const ['body.css'])
 class BodyComponent {
   final TimeRecordService _recorder;
-  final UserService _userService;
+  final AuthService _authService;
 
-  BodyComponent(this._recorder, this._userService);
+  BodyComponent(this._recorder, this._authService);
 
   final List<Dimension> dimensions = Dimension.all;
 
@@ -33,11 +33,11 @@ class BodyComponent {
         ':${(duration.inSeconds % 60).toString().padLeft(2, '0')}';
   }
 
-  Future login() => _userService.login();
+  Future login() => _authService.login();
 
-  Future logout() => _userService.logout();
+  Future logout() => _authService.logout();
 
-  bool get loggedIn => _userService.loggedIn;
+  bool get isLoggedIn => _authService.isLoggedIn;
 
-  String get userName => _userService.user?.login;
+  String get username => _authService.user?.login;
 }
