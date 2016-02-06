@@ -4,7 +4,7 @@ class TimeRecord {
   DateTime startedAt;
   DateTime endedAt;
 
-  String dimension;
+  Dimension dimension;
 
   TimeRecord({this.startedAt, this.dimension});
 

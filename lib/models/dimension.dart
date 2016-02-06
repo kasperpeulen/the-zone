@@ -1,20 +1,20 @@
-class DimensionInfo {
-  String name;
-  String info;
-
-  DimensionInfo(this.name, this.info);
-}
-
 class Dimension {
-  static const String zone = 'The Zone';
-  static const String demand = 'Demand';
-  static const String delusion = 'Delusion';
-  static const String distraction = 'Distraction';
+  static const Dimension zone = const Dimension._('The Zone','Important, Not Urgent');
+  static const Dimension demand = const Dimension._('Demand','Important, Urgent');
+  static const Dimension delusion = const Dimension._('Delusion','Not Important, Urgent');
+  static const Dimension distraction = const Dimension._('Distraction','Not Important, Not Urgent');
 
-  static const List<String> all = const [
+  static const List<Dimension> all = const [
     zone,
     demand,
     delusion,
     distraction
   ];
+
+  final String name;
+  final String info;
+
+  const Dimension._(this.name,this.info);
+
+  String toString() => '$name';
 }

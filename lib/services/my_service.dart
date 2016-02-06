@@ -18,7 +18,7 @@ class MyService {
     return timeRecords.last;
   }
 
-  void dimensionIsClicked(String dimensionClicked) {
+  void dimensionIsClicked(Dimension dimensionClicked) {
     TimeRecord currentRecord = getCurrentRecord();
     if(currentRecord != null) {
       // end the record
@@ -36,8 +36,8 @@ class MyService {
     print(timeRecords);
   }
 
-  String getActiveDimension() {
-    for (String dimension in Dimension.all) {
+  Dimension getActiveDimension() {
+    for (Dimension dimension in Dimension.all) {
       if (_isDimensionActive(dimension)) {
         return dimension;
       }
@@ -45,7 +45,7 @@ class MyService {
     return null;
   }
 
-  Duration getTotalDuration(String dimension) {
+  Duration getTotalDuration(Dimension dimension) {
     Duration duration = new Duration(seconds: 0);
     for (TimeRecord record in timeRecords) {
       if (record.duration != null && record.dimension == dimension) {
@@ -55,7 +55,7 @@ class MyService {
     return duration;
   }
 
-  bool _isDimensionActive(String dimension) {
+  bool _isDimensionActive(Dimension dimension) {
     TimeRecord currentRecord = getCurrentRecord();
     if (currentRecord == null) {
       return false;
