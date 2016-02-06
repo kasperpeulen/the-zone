@@ -1,3 +1,11 @@
+<div id="top-right">
+  <login *ngIf="!loggedIn" class="btn btn-default" (click)="login()">Login</login>
+  <logout *ngIf="loggedIn">
+    <div class="btn btn-default" (click)="logout()">Logout</div>
+    <div>Welcome {{userName}}! </div>
+  </logout>
+</div>
+
 <dimension class="btn btn-default"
            *ngFor="#dimension of dimensions"
            (click)="onClick(dimension.name)"
