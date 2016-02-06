@@ -8,25 +8,18 @@ class TimeRecordService {
 
   /// THe current time record. Returns null if there are no records yet,
   /// or if the last record is already ended.
-  TimeRecord getCurrentRecord() {
-    if (recordings.isEmpty) {
-      return null;
-    }
-    if (recordings.last.hasEnded) {
-      return null;
-    }
-    return recordings.last;
-  }
+  TimeRecord get currentRecord =>
+      recordings.isEmpty || recordings.last.hasEnded ? null : recordings.last;
 
   void dimensionIsClicked(Dimension dimension) {
-    TimeRecord currentRecord = getCurrentRecord();
+    TimeRecord current = currentRecord;
     if (currentRecord != null) {
       // end the record
-      currentRecord.endedAt = new DateTime.now();
+      current.endedAt = new DateTime.now();
 
       // don't create a new timer when the dimension clicked
       // is the same as the currentRecord
-      if (currentRecord.dimension == dimension) {
+      if (current.dimension == dimension) {
         return;
       }
     }

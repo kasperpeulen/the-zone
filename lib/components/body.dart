@@ -19,7 +19,7 @@ class BodyComponent {
   }
 
   bool isRecording(Dimension dimension) {
-    Dimension current = _recorder.getCurrentRecord()?.dimension;
+    Dimension current = _recorder.currentRecord?.dimension;
     return dimension == current;
   }
 
