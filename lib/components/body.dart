@@ -8,25 +8,25 @@ import 'package:the_zone/models/time_record.dart';
 class BodyComponent {
   final MyService _myService;
 
-  BodyComponent(this._myService);
+  final List<Dimension> dimensions = Dimension.all;
 
-  final List<DimensionInfo> dimensions = [
-    new DimensionInfo(Dimension.zone, 'Important, Not Urgent'),
-    new DimensionInfo(Dimension.demand, 'Important, Urgent'),
-    new DimensionInfo(Dimension.delusion, 'Not Important, Urgent'),
-    new DimensionInfo(Dimension.distraction, 'Not Important, Not Urgent'),
-  ];
+  BodyComponent(this._myService);
 
   List<TimeRecord> get timeRecords => _myService.timeRecords;
 
-  void onClick(String dimensionClicked) {
+  void onClick(Dimension dimensionClicked) {
     _myService.dimensionIsClicked(dimensionClicked);
 
     print(_myService.getActiveDimension());
   }
 
-  String getActiveDimension() => _myService.getActiveDimension();
+  Dimension getActiveDimension() => _myService.getActiveDimension();
 
-  Duration getTotalDuration(String dimension) =>
-      _myService.getTotalDuration(dimension);
+  String getTotalDuration(Dimension dimension) {
+    var duration = _myService.getTotalDuration(dimension);
+    print(duration);
+    return '${duration.inHours.toString().padLeft(2, '0')}'
+        ':${(duration.inMinutes % 60).toString().padLeft(2, '0')}'
+        ':${(duration.inSeconds % 60).toString().padLeft(2, '0')}';
+  }
 }
