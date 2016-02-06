@@ -36,8 +36,6 @@ class TimeRecordService {
     print(recordings);
   }
 
-  Dimension getActiveDimension() => getCurrentRecord()?.dimension;
-
   Duration getTotalDuration(Dimension dimension) {
     Duration duration = new Duration(seconds: 0);
     for (TimeRecord record in recordings) {
