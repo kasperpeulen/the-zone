@@ -14,10 +14,8 @@ class BodyComponent {
 
   List<TimeRecord> get timeRecords => _myService.timeRecords;
 
-  void onClick(String dimensionClicked) {
+  void onClick(Dimension dimensionClicked) {
     _myService.dimensionIsClicked(dimensionClicked);
-
-    print(_myService.getActiveDimension());
   }
 
   Dimension getActiveDimension() => _myService.getActiveDimension();

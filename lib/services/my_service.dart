@@ -18,7 +18,7 @@ class MyService {
     return timeRecords.last;
   }
 
-  void dimensionIsClicked(String dimensionClicked) {
+  void dimensionIsClicked(Dimension dimensionClicked) {
     TimeRecord currentRecord = getCurrentRecord();
     if (currentRecord != null) {
       // end the record
