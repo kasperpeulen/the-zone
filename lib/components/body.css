@@ -17,3 +17,7 @@ dimension {
 .active {
   background: whitesmoke;
 }
+
+.flex {
+  flex: 1;
+}

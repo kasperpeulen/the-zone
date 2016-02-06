@@ -1,16 +1,16 @@
 <dimension class="btn btn-default"
            *ngFor="#dimension of dimensions"
-           (click)="onClick(dimension.name)"
-           [class.active]="isActive(dimension)"
+           (click)="activate(dimension)"
+           [class.active]="isRecording(dimension)"
 >
-  <div style="flex: 1;">{{dimension.name}}</div>
+  <div class="flex">{{dimension}}</div>
   <div>{{getTotalDuration(dimension)}}</div>
 </dimension>
 
 <h1>Records</h1>
 
 <ul>
-  <li *ngFor="#record of timeRecords">
+  <li *ngFor="#record of recordings">
     Dimension: {{record.dimension}}<br>
     Started At: {{record.startedAt}}<br>
     Ended At: {{record.endedAt}}
