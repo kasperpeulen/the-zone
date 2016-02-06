@@ -18,9 +18,10 @@ class BodyComponent {
     _recorder.dimensionIsClicked(dimension);
   }
 
-  Dimension getActiveDimension() => _recorder.getCurrentRecord()?.dimension;
-
-  bool isActive(Dimension dimension) => dimension == getActiveDimension();
+  bool isRecording(Dimension dimension) {
+    Dimension current = _recorder.getCurrentRecord()?.dimension;
+    return dimension == current;
+  }
 
   String getTotalDuration(Dimension dimension) {
     final duration = _recorder.getTotalDuration(dimension);

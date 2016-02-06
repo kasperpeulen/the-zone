@@ -1,7 +1,7 @@
 <dimension class="btn btn-default"
            *ngFor="#dimension of dimensions"
            (click)="activate(dimension)"
-           [class.active]="isActive(dimension)"
+           [class.active]="isRecording(dimension)"
 >
   <div class="flex">{{dimension}}</div>
   <div>{{getTotalDuration(dimension)}}</div>
