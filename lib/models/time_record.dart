@@ -1,0 +1,26 @@
+import 'package:the_zone/models/dimension.dart';
+
+class TimeRecord {
+  DateTime startedAt;
+  DateTime endedAt;
+
+  String dimension;
+
+  TimeRecord({this.startedAt, this.dimension});
+
+  bool get hasEnded => endedAt != null;
+
+  Duration get duration {
+    if (endedAt == null) {
+      return null;
+    }
+    return endedAt.difference(startedAt);
+  }
+
+  String toString() {
+    return 'startedAt: $startedAt '
+        'endedAt: $endedAt '
+        'dimension $dimension ';
+  }
+}
+
