@@ -20,7 +20,7 @@ class MyService {
 
   void dimensionIsClicked(String dimensionClicked) {
     TimeRecord currentRecord = getCurrentRecord();
-    if(currentRecord != null) {
+    if (currentRecord != null) {
       // end the record
       currentRecord.endedAt = new DateTime.now();
 
@@ -32,20 +32,20 @@ class MyService {
     }
 
     timeRecords.add(new TimeRecord(
-          startedAt: new DateTime.now(), dimension: dimensionClicked));
+        startedAt: new DateTime.now(), dimension: dimensionClicked));
     print(timeRecords);
   }
 
   Dimension getActiveDimension() {
     for (Dimension dimension in Dimension.all) {
-      if (_isDimensionActive(dimension.name)) {
+      if (_isDimensionActive(dimension)) {
         return dimension;
       }
     }
     return null;
   }
 
-  Duration getTotalDuration(String dimension) {
+  Duration getTotalDuration(Dimension dimension) {
     Duration duration = new Duration(seconds: 0);
     for (TimeRecord record in timeRecords) {
       if (record.duration != null && record.dimension == dimension) {
@@ -55,7 +55,7 @@ class MyService {
     return duration;
   }
 
-  bool _isDimensionActive(String dimension) {
+  bool _isDimensionActive(Dimension dimension) {
     TimeRecord currentRecord = getCurrentRecord();
     if (currentRecord == null) {
       return false;
@@ -63,5 +63,3 @@ class MyService {
     return (currentRecord.dimension == dimension);
   }
 }
-
-
