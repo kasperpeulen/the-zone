@@ -1,5 +1,3 @@
-import 'package:the_zone/models/dimension.dart';
-
 class TimeRecord {
   DateTime startedAt;
   DateTime endedAt;
@@ -23,4 +21,3 @@ class TimeRecord {
         'dimension $dimension ';
   }
 }
-
