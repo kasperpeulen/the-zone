@@ -9,9 +9,9 @@ import 'dart:async';
     selector: 'body', templateUrl: 'body.html', styleUrls: const ['body.css'])
 class BodyComponent {
   final TimeRecordService _recorder;
-  final AuthService _authService;
+  final AuthService _auth;
 
-  BodyComponent(this._recorder, this._authService);
+  BodyComponent(this._recorder, this._auth);
 
   final List<Dimension> dimensions = Dimension.all;
 
@@ -33,11 +33,11 @@ class BodyComponent {
         ':${(duration.inSeconds % 60).toString().padLeft(2, '0')}';
   }
 
-  Future login() => _authService.login();
+  Future login() => _auth.login();
 
-  Future logout() => _authService.logout();
+  Future logout() => _auth.logout();
 
-  bool get isLoggedIn => _authService.isLoggedIn;
+  bool get isLoggedIn => _auth.isLoggedIn;
 
-  String get username => _authService.user?.login;
+  String get username => _auth.user?.login;
 }
