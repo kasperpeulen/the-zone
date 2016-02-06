@@ -3,7 +3,7 @@ import 'package:the_zone/models/time_record.dart';
 import 'package:the_zone/models/dimension.dart';
 
 @Injectable()
-class MyService {
+class TimeRecordService {
   List<TimeRecord> timeRecords = [];
 
   /// THe current time record. Returns null if there are no records yet,
