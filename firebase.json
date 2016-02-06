@@ -1,0 +1,8 @@
+{
+  "firebase": "the-zone",
+  "public": "build/web",
+  "ignore": [
+    "firebase.json",
+    "**/.*"
+  ]
+}

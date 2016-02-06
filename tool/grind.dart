@@ -28,3 +28,9 @@ void testFormat() {
     throw "dartfmt failure";
   }
 }
+
+@Task('Deploy to firebase')
+void deploy() {
+  Pub.build(directories: ['web']);
+  run('firebase', arguments: ['deploy']);
+}
