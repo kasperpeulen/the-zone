@@ -10,12 +10,7 @@ class BodyComponent {
 
   BodyComponent(this._myService);
 
-  final List<DimensionInfo> dimensions = [
-    new DimensionInfo(Dimension.zone, 'Important, Not Urgent'),
-    new DimensionInfo(Dimension.demand, 'Important, Urgent'),
-    new DimensionInfo(Dimension.delusion, 'Not Important, Urgent'),
-    new DimensionInfo(Dimension.distraction, 'Not Important, Not Urgent'),
-  ];
+  final List<Dimension> dimensions = Dimension.all;
 
   List<TimeRecord> get timeRecords => _myService.timeRecords;
 
@@ -25,7 +20,9 @@ class BodyComponent {
     print(_myService.getActiveDimension());
   }
 
-  String getActiveDimension() => _myService.getActiveDimension();
+  Dimension getActiveDimension() => _myService.getActiveDimension();
+
+  bool isActive(Dimension dimension) => dimension == getActiveDimension();
 
   Duration getTotalDuration(String dimension) =>
       _myService.getTotalDuration(dimension);

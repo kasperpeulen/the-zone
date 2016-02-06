@@ -36,9 +36,9 @@ class MyService {
     print(timeRecords);
   }
 
-  String getActiveDimension() {
-    for (String dimension in Dimension.all) {
-      if (_isDimensionActive(dimension)) {
+  Dimension getActiveDimension() {
+    for (Dimension dimension in Dimension.all) {
+      if (_isDimensionActive(dimension.name)) {
         return dimension;
       }
     }
