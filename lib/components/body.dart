@@ -1,12 +1,12 @@
 import 'package:angular2/core.dart';
 import 'package:the_zone/models/dimension.dart';
-import 'package:the_zone/services/my_service.dart';
+import 'package:the_zone/services/time_record_service.dart';
 import 'package:the_zone/models/time_record.dart';
 
 @Component(
     selector: 'body', templateUrl: 'body.html', styleUrls: const ['body.css'])
 class BodyComponent {
-  final MyService _myService;
+  final TimeRecordService _myService;
 
   BodyComponent(this._myService);
 
@@ -18,9 +18,8 @@ class BodyComponent {
     _myService.dimensionIsClicked(dimensionClicked);
   }
 
-  Dimension getActiveDimension() => _myService.getActiveDimension();
-
-  bool isActive(Dimension dimension) => dimension == getActiveDimension();
+  bool isActive(Dimension dimension) =>
+      dimension == _myService.getActiveDimension();
 
   String getTotalDuration(Dimension dimension) {
     final duration = _myService.getTotalDuration(dimension);

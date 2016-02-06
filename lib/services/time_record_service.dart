@@ -3,7 +3,7 @@ import 'package:the_zone/models/time_record.dart';
 import 'package:the_zone/models/dimension.dart';
 
 @Injectable()
-class MyService {
+class TimeRecordService {
   List<TimeRecord> timeRecords = [];
 
   /// THe current time record. Returns null if there are no records yet,
@@ -36,14 +36,7 @@ class MyService {
     print(timeRecords);
   }
 
-  Dimension getActiveDimension() {
-    for (Dimension dimension in Dimension.all) {
-      if (_isDimensionActive(dimension)) {
-        return dimension;
-      }
-    }
-    return null;
-  }
+  Dimension getActiveDimension() => getCurrentRecord()?.dimension;
 
   Duration getTotalDuration(Dimension dimension) {
     Duration duration = new Duration(seconds: 0);
@@ -53,13 +46,5 @@ class MyService {
       }
     }
     return duration;
-  }
-
-  bool _isDimensionActive(Dimension dimension) {
-    TimeRecord currentRecord = getCurrentRecord();
-    if (currentRecord == null) {
-      return false;
-    }
-    return (currentRecord.dimension == dimension);
   }
 }
