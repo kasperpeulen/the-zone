@@ -16,7 +16,10 @@ class MainComponent {
   final TimeRecordService _recorder;
   final AuthService _auth;
 
-  MainComponent(this._recorder, this._auth);
+  MainComponent(this._recorder, this._auth) {
+    // update view periodic
+    new Timer.periodic(new Duration(seconds: 1), (_) {});
+  }
 
   final List<Dimension> dimensions = Dimension.values;
 
