@@ -11,7 +11,7 @@ import 'package:the_zone/services/auth_service.dart';
 Future main() async {
   final firebase = new Firebase('http://the-zone.firebaseio.com/');
 
-  bootstrap(BodyComponent, [
+  await bootstrap(BodyComponent, [
     TimeRecordService,
     AuthService,
     provide(Firebase, useValue: firebase),
@@ -23,9 +23,14 @@ Future main() async {
 }
 
 Future<Authentication> bootstrapAuth(Firebase firebase) async {
-  final authJson = await firebase.onAuth().first;
-  if (authJson != null && authJson['provider'] == 'github') {
-    return new Authentication.withToken(authJson['github']['accessToken']);
+  final authData = await firebase.onAuth().first;
+  if (authData != null && authData['provider'] == 'github') {
+    firebase
+        .child("users")
+        .child(authData['uid'])
+        .child('username')
+        .set(authData['github']['username']);
+    return new Authentication.withToken(authData['github']['accessToken']);
   } else {
     return new Authentication.anonymous();
   }
