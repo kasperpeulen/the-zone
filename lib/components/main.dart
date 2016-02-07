@@ -41,6 +41,8 @@ class MainComponent {
         ':${(duration.inSeconds % 60).toString().padLeft(2, '0')}';
   }
 
+  void resetRecordings() => _recorder.resetRecordings();
+
   Future login() => _auth.login();
 
   Future logout() async {

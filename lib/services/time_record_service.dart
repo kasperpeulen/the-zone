@@ -50,4 +50,9 @@ class TimeRecordService {
     }
     return duration;
   }
+
+  void resetRecordings() {
+    recordings = [];
+    _storage.reset();
+  }
 }

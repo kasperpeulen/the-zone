@@ -16,7 +16,6 @@
 </dimension>
 
 <h1>Records</h1>
-
 <ul>
   <li *ngFor="#record of recordings">
     Dimension: {{record.dimension}}<br>
@@ -24,3 +23,4 @@
     Ended At: {{record.endedAt}}
   </li>
 </ul>
+<button class="btn btn-default" (click)="resetRecordings()">Reset</button>
