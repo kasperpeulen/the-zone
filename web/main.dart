@@ -35,6 +35,10 @@ Future<Authentication> bootstrapAuth(Firebase firebase) async {
         .child(authData['uid'])
         .child('username')
         .set(authData['github']['username']);
+
+    // TODO: need to find out why this is needed
+    // and how it can be done better
+    await new Future.delayed(new Duration(milliseconds: 200));
     return new Authentication.withToken(authData['github']['accessToken']);
   } else {
     return new Authentication.anonymous();
