@@ -8,7 +8,6 @@ import 'package:firebase/firebase.dart';
 import 'package:github/browser.dart';
 import 'package:the_zone/services/auth_service.dart';
 
-
 Future main() async {
   final firebase = new Firebase('http://the-zone.firebaseio.com/');
 

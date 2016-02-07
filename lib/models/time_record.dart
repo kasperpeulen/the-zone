@@ -1,10 +1,10 @@
 import 'dimension.dart';
 
 class TimeRecord {
-  DateTime startedAt;
-  DateTime endedAt;
+  final DateTime startedAt;
+  final Dimension dimension;
 
-  Dimension dimension;
+  DateTime endedAt;
 
   TimeRecord({this.startedAt, this.dimension});
 
