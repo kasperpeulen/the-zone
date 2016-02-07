@@ -1,5 +1,4 @@
 #!/usr/bin/env dart
-
 import 'dart:io';
 import 'dart:async';
 
@@ -61,7 +60,7 @@ Future watchDogma() async {
 
 @Task()
 Future createService() async {
-  await for(var bytes in stdin) {
+  await for (var bytes in stdin) {
     String input = SYSTEM_ENCODING.decode(bytes).trim();
     new File('lib/services/${input}_service.dart')..writeAsStringSync('''
 import 'package:angular2/core.dart';

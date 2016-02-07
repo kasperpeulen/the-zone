@@ -1,9 +1,19 @@
 import 'package:angular2/core.dart';
 import 'package:the_zone/models/time_record.dart';
 import 'package:the_zone/models/dimension.dart';
+import 'storage_service.dart';
 
 @Injectable()
 class TimeRecordService {
+  final StorageService _storage;
+  TimeRecordService(this._storage) {
+    _storage.loadRecordings().then((r) {
+      if (r != null) {
+        recordings = r;
+      }
+    });
+  }
+
   List<TimeRecord> recordings = [];
 
   /// THe current time record. Returns null if there are no records yet,
@@ -23,7 +33,8 @@ class TimeRecordService {
 
     recordings.add(
         new TimeRecord(startedAt: new DateTime.now(), dimension: dimension));
-    print(recordings);
+
+    _storage.save(recordings);
   }
 
   Duration getTotalDuration(Dimension dimension) {
