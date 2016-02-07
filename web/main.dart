@@ -8,11 +8,14 @@ import 'package:firebase/firebase.dart';
 import 'package:github/browser.dart';
 import 'package:the_zone/services/auth_service.dart';
 import 'package:the_zone/services/storage_service.dart';
+import 'package:angular2/router.dart';
 
 Future main() async {
   final firebase = new Firebase('http://the-zone.firebaseio.com/');
 
   await bootstrap(BodyComponent, [
+    ROUTER_PROVIDERS,
+    provide(LocationStrategy, useClass: HashLocationStrategy),
     TimeRecordService,
     AuthService,
     StorageService,

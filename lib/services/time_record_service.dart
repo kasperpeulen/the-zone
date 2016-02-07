@@ -2,21 +2,25 @@ import 'package:angular2/core.dart';
 import 'package:the_zone/models/time_record.dart';
 import 'package:the_zone/models/dimension.dart';
 import 'storage_service.dart';
+import 'dart:async';
 
 @Injectable()
 class TimeRecordService {
   final StorageService _storage;
   TimeRecordService(this._storage) {
-    _storage.loadRecordings().then((r) {
+    loaded = _storage.loadRecordings().then((r) {
       if (r != null) {
         recordings = r;
       }
     });
   }
 
+  /// Returnrs when data is fetched from firebase.
+  Future loaded;
+
   List<TimeRecord> recordings = [];
 
-  /// THe current time record. Returns null if there are no records yet,
+  /// The current time record. Returns null if there are no records yet,
   /// or if the last record is already ended.
   TimeRecord get currentRecord =>
       recordings.isEmpty || recordings.last.hasEnded ? null : recordings.last;
