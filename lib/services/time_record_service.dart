@@ -32,7 +32,10 @@ class TimeRecordService {
 
       // don't create a new timer when the dimension clicked
       // is the same as the currentRecord
-      if (recordings.last.dimension == dimension) return;
+      if (recordings.last.dimension == dimension){
+        _storage.save(recordings);
+        return;
+      }
     }
 
     recordings.add(
@@ -51,12 +54,13 @@ class TimeRecordService {
     return duration;
   }
 
-  int percentageDuration(Dimension dimension) {
+  num percentageDuration(Dimension dimension) {
     final Duration total = Dimension.values
         .map((d) => getTotalDuration(d))
         .reduce((v, e) => v + e);
     final duration = getTotalDuration(dimension);
-    return duration.inSeconds / total.inSeconds;
+    num result = duration.inSeconds / total.inSeconds;
+    return result.isNaN ? 0 : result;
   }
 
   void resetRecordings() {
