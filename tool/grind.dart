@@ -78,7 +78,7 @@ Future<Null> createComponent() async {
       .map(SYSTEM_ENCODING.decode)
       .map((s) => s.trim())
       .forEach((component) async {
-    new File('lib/components/$component.scss')..createSync();
+    new File('lib/components/$component.css')..createSync();
     new File('lib/components/$component.html')..createSync();
     new File('lib/components/$component.dart')
       ..createSync()
