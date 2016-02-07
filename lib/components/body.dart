@@ -2,20 +2,23 @@ import 'dart:async';
 import 'dart:html' show window;
 
 import 'package:angular2/core.dart';
-import 'package:the_zone/models/dimension.dart';
 import 'package:the_zone/services/time_record_service.dart';
 import 'package:the_zone/models/time_record.dart';
 import 'package:the_zone/services/auth_service.dart';
+import 'package:the_zone/models/dimension.dart';
 
 @Component(
-    selector: 'body', templateUrl: 'body.html', styleUrls: const ['body.css'])
+    selector: 'body',
+    templateUrl: 'body.html',
+    styleUrls: const ['body.css'],
+    pipes: const [GetDimensionName])
 class BodyComponent {
   final TimeRecordService _recorder;
   final AuthService _auth;
 
   BodyComponent(this._recorder, this._auth);
 
-  final List<Dimension> dimensions = Dimension.all;
+  final List<Dimension> dimensions = Dimension.values;
 
   List<TimeRecord> get recordings => _recorder.recordings;
 
@@ -45,4 +48,10 @@ class BodyComponent {
   bool get isLoggedIn => _auth.isLoggedIn;
 
   String get username => _auth.user?.login;
+}
+
+@Pipe(name: 'getDimensionName')
+class GetDimensionName implements PipeTransform {
+  String transform(Dimension dimension, [List args]) =>
+      getDimensionName(dimension);
 }

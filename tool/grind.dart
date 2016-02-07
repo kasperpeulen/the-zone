@@ -1,4 +1,7 @@
 import 'package:grinder/grinder.dart';
+import 'package:dogma_codegen/build.dart';
+import 'package:watcher/watcher.dart';
+import 'dart:async';
 
 void main(List<String> args) {
   grind(args);
@@ -33,4 +36,20 @@ void testFormat() {
 void deploy() {
   Pub.build(directories: ['web']);
   run('firebase', arguments: ['deploy']);
+}
+
+@Task()
+Future buildDogma() async {
+  await build([],
+      modelPath: 'lib/models',
+      convertPath: 'lib/convert',
+      mapper: false,
+      unmodifiable: false);
+}
+
+@Task()
+Future watchDogma() async {
+  await for (var _ in new Watcher('lib/models').events) {
+    await buildDogma();
+  }
 }

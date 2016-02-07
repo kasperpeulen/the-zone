@@ -8,9 +8,12 @@ dependencies:
   bootstrap: '^3.3.4'
   firebase: '^0.6.5+1'
   github: '^2.3.1+1'
+  dogma_convert: '^0.0.1'
 dev_dependencies:
   grinder: '^0.8.0+2'
   git: '^0.4.4+2'
+  dogma_codegen: '^0.0.2'
+  watcher: '^0.9.7'
 transformers:
 - angular2:
     platform_directives:
