@@ -23,7 +23,7 @@ class TimeRecord {
 
   Duration get duration {
     if (endedAt == null) {
-      return null;
+      return new DateTime.now().difference(startedAt);
     }
     return endedAt.difference(startedAt);
   }
