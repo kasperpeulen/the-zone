@@ -1,24 +1,13 @@
-class Dimension {
-  static const Dimension zone =
-      const Dimension('The Zone', 'Important, Not Urgent');
-  static const Dimension demand =
-      const Dimension('Demand', 'Important, Urgent');
-  static const Dimension delusion =
-      const Dimension('Delusion', 'Not Important, Urgent');
-  static const Dimension distraction =
-      const Dimension('Distraction', 'Not Important, Not Urgent');
+library dimension;
 
-  static const List<Dimension> all = const [
-    zone,
-    demand,
-    delusion,
-    distraction
-  ];
+enum Dimension { zone, demand, delusion, distraction }
 
-  final String name;
-  final String info;
+final List<String> _dimensionNames = [
+  "The Zone",
+  "Demand",
+  "Delusion",
+  "Distraction"
+];
 
-  const Dimension(this.name, this.info);
-
-  String toString() => name;
-}
+String getDimensionName(Dimension dimension) =>
+    _dimensionNames[dimension.index];

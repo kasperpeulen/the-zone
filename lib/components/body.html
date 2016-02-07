@@ -11,7 +11,7 @@
            (click)="activate(dimension)"
            [class.active]="isRecording(dimension)"
 >
-  <div class="flex">{{dimension}}</div>
+  <div class="flex">{{dimension | getDimensionName}}</div>
   <div>{{getTotalDuration(dimension)}}</div>
 </dimension>
 
