@@ -1,9 +1,11 @@
+import 'dart:async';
+import 'dart:html' show window;
+
 import 'package:angular2/core.dart';
 import 'package:the_zone/models/dimension.dart';
 import 'package:the_zone/services/time_record_service.dart';
 import 'package:the_zone/models/time_record.dart';
 import 'package:the_zone/services/auth_service.dart';
-import 'dart:async';
 
 @Component(
     selector: 'body', templateUrl: 'body.html', styleUrls: const ['body.css'])
@@ -35,7 +37,10 @@ class BodyComponent {
 
   Future login() => _auth.login();
 
-  Future logout() => _auth.logout();
+  Future logout() async {
+    await _auth.logout();
+    window.location.reload();
+  }
 
   bool get isLoggedIn => _auth.isLoggedIn;
 

@@ -1,9 +1,8 @@
+import 'dart:async';
+
 import 'package:angular2/core.dart';
 import 'package:firebase/firebase.dart';
 import 'package:github/browser.dart';
-import 'dart:html';
-import 'dart:async';
-
 
 @Injectable()
 class AuthService {
@@ -28,7 +27,6 @@ class AuthService {
 
   Future<Null> logout() async {
     _firebase.unauth();
-    window.location.reload();
   }
 
   bool get isLoggedIn => _auth.isAnonymous ? false : true;
