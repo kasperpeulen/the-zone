@@ -9,6 +9,7 @@ dependencies:
   firebase: '^0.6.5+1'
   github: '^2.3.1+1'
   dogma_convert: '^0.0.1'
+  dart_to_js_script_rewriter: '^0.1.0+4'
 dev_dependencies:
   grinder: '^0.8.0+2'
   git: '^0.4.4+2'
@@ -22,5 +23,6 @@ transformers:
     platform_pipes:
     - 'package:angular2/common.dart#COMMON_PIPES'
     entry_points: web/main.dart
+- dart_to_js_script_rewriter
 dependency_overrides:
   analyzer: 0.27.1

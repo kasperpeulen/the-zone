@@ -35,4 +35,9 @@ class StorageService {
     }
     return null;
   }
+
+  void reset() {
+    final authData = _firebase.getAuth();
+    _firebase.child("users").child(authData['uid']).child('recordings').set([]);
+  }
 }

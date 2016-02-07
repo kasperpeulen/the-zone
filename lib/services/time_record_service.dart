@@ -50,4 +50,17 @@ class TimeRecordService {
     }
     return duration;
   }
+
+  int percentageDuration(Dimension dimension) {
+    final Duration total = Dimension.values
+        .map((d) => getTotalDuration(d))
+        .reduce((v, e) => v + e);
+    final duration = getTotalDuration(dimension);
+    return duration.inSeconds / total.inSeconds;
+  }
+
+  void resetRecordings() {
+    recordings = [];
+    _storage.reset();
+  }
 }

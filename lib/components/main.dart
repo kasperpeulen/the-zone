@@ -41,6 +41,11 @@ class MainComponent {
         ':${(duration.inSeconds % 60).toString().padLeft(2, '0')}';
   }
 
+  int getPercentageDuration(Dimension dimension) =>
+      _recorder.percentageDuration(dimension);
+
+  void resetRecordings() => _recorder.resetRecordings();
+
   Future login() => _auth.login();
 
   Future logout() async {
