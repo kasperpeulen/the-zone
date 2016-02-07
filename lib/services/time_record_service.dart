@@ -8,7 +8,9 @@ class TimeRecordService {
   final StorageService _storage;
   TimeRecordService(this._storage) {
     _storage.loadRecordings().then((r) {
-      recordings = r;
+      if (r != null) {
+        recordings = r;
+      }
     });
   }
 
