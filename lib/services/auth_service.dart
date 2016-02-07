@@ -26,7 +26,7 @@ class AuthService {
   }
 
   Future<Null> logout() async {
-    _firebase.unauth();
+    await _firebase.unauth();
   }
 
   bool get isLoggedIn => _auth.isAnonymous ? false : true;
