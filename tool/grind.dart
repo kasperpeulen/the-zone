@@ -1,7 +1,12 @@
+#!/usr/bin/env dart
+
+import 'dart:io';
+import 'dart:async';
+
 import 'package:grinder/grinder.dart';
 import 'package:dogma_codegen/build.dart';
 import 'package:watcher/watcher.dart';
-import 'dart:async';
+import 'package:git/git.dart';
 
 void main(List<String> args) {
   grind(args);
@@ -52,4 +57,42 @@ Future watchDogma() async {
   await for (var _ in new Watcher('lib/models').events) {
     await buildDogma();
   }
+}
+
+@Task()
+Future createService() async {
+  await for(var bytes in stdin) {
+    String input = SYSTEM_ENCODING.decode(bytes).trim();
+    new File('lib/services/${input}_service.dart')..writeAsStringSync('''
+import 'package:angular2/core.dart';
+
+@Injectable()
+class ${input.split('_').map((s) => s[0].toUpperCase() + s.substring(1)).join('')}Service {}
+    ''');
+    await runGit(['add', '--all']);
+  }
+}
+
+@Task()
+Future<Null> createComponent() async {
+  await stdin
+      .map(SYSTEM_ENCODING.decode)
+      .map((s) => s.trim())
+      .forEach((component) async {
+    new File('lib/components/$component.scss')..createSync();
+    new File('lib/components/$component.html')..createSync();
+    new File('lib/components/$component.dart')
+      ..createSync()
+      ..writeAsStringSync('''
+import 'package:angular2/core.dart';
+
+@Component(
+    selector: '${component.replaceAll('_', '-')}',
+    templateUrl: '$component.html',
+    styleUrls: const ['$component.css']
+)
+class ${component.split('_').map((s) => s[0].toUpperCase() + s.substring(1)).join('')}Component {}
+      ''');
+    await runGit(['add', '--all']);
+  });
 }
