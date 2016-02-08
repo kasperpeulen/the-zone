@@ -13,19 +13,14 @@ class StorageService {
 
   StorageService(this._firebase, this._auth);
 
-  Map _clone(data){
-    return JSON.decode(JSON.encode(data));
-  }
-
   void update(TimeRecord recording) {
     final auth = _firebase.getAuth();
-    final data = _clone(recording);
     _firebase
         .child('users')
         .child(auth['uid'])
         .child('recordings')
         .child(recording.uid)
-        .set(data);
+        .set(recording.toJson());
   }
 
   void push(TimeRecord recording){
@@ -37,7 +32,7 @@ class StorageService {
         .push();
 
     recording.uid = ref.key;
-    ref.set(_clone(recording));
+    ref.set(recording.toJson());
   }
 
   Future<List<TimeRecord>> getAll() async {
