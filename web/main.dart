@@ -38,7 +38,7 @@ Future<Authentication> bootstrapAuth(Firebase firebase) async {
 
     // TODO: need to find out why this is needed
     // and how it can be done better
-    await new Future.delayed(new Duration(milliseconds: 200));
+    await new Future.delayed(new Duration(milliseconds: 500));
     return new Authentication.withToken(authData['github']['accessToken']);
   } else {
     return new Authentication.anonymous();
