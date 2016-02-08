@@ -28,7 +28,7 @@ class MainComponent {
   void activate(Dimension dimension) {
     bool isCurrent = isRecording(dimension);
     _recorder.stop();
-    if(isCurrent) return;
+    if (isCurrent) return;
     _recorder.record(dimension);
   }
 

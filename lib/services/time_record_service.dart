@@ -6,7 +6,6 @@ import 'dart:async';
 
 @Injectable()
 class TimeRecordService {
-
   final StorageService _storage;
 
   TimeRecordService(this._storage);
@@ -20,22 +19,21 @@ class TimeRecordService {
   /// The current time record. Returns null if there are no records yet,
   /// or if the last record is already ended.
   TimeRecord get currentRecord =>
-      recordings.firstWhere((r) => !r.hasEnded,orElse: () => null);
+      recordings.firstWhere((r) => !r.hasEnded, orElse: () => null);
 
   /// Verifies if there's a recording in progress
   bool get isRecording => currentRecord != null;
 
   /// Stops and saves the current recording
-  void stop(){
-    if(!isRecording) return;
+  void stop() {
+    if (!isRecording) return;
     final recording = currentRecord;
     recording.endedAt = new DateTime.now();
     _storage.update(recording);
   }
 
-  void record(Dimension dimension){
-    if(isRecording)
-      throw "There's a recording in progress already";
+  void record(Dimension dimension) {
+    if (isRecording) throw "There's a recording in progress already";
 
     final now = new DateTime.now();
     final recording = new TimeRecord(startedAt: now, dimension: dimension);
