@@ -6,24 +6,21 @@ import 'dart:async';
 
 @Injectable()
 class TimeRecordService {
+
   final StorageService _storage;
-  TimeRecordService(this._storage) {
-    loaded = _storage.getAll().then((r) {
-      if (r != null) {
-        recordings = r;
-      }
-    });
-  }
+
+  TimeRecordService(this._storage);
 
   /// Returns when data is fetched from firebase.
   Future loaded;
 
-  List<TimeRecord> recordings = [];
+  /// Returns all recordings
+  List<TimeRecord> get recordings => _storage.recordings;
 
   /// The current time record. Returns null if there are no records yet,
   /// or if the last record is already ended.
   TimeRecord get currentRecord =>
-      recordings.isEmpty || recordings.last.hasEnded ? null : recordings.last;
+      recordings.firstWhere((r) => !r.hasEnded,orElse: () => null);
 
   /// Verifies if there's a recording in progress
   bool get isRecording => currentRecord != null;
@@ -31,9 +28,9 @@ class TimeRecordService {
   /// Stops and saves the current recording
   void stop(){
     if(!isRecording) return;
-
-    currentRecord.endedAt = new DateTime.now();
-    _storage.update(recordings.last);
+    final recording = currentRecord;
+    recording.endedAt = new DateTime.now();
+    _storage.update(recording);
   }
 
   void record(Dimension dimension){
@@ -42,7 +39,6 @@ class TimeRecordService {
 
     final now = new DateTime.now();
     final recording = new TimeRecord(startedAt: now, dimension: dimension);
-    recordings.add(recording);
     _storage.push(recording);
   }
 
@@ -65,8 +61,5 @@ class TimeRecordService {
     return result.isNaN ? 0 : result;
   }
 
-  void resetRecordings() {
-    recordings = [];
-    _storage.reset();
-  }
+  void resetRecordings() => _storage.reset();
 }
