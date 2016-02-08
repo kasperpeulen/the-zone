@@ -8,7 +8,7 @@ import 'dart:async';
 class TimeRecordService {
   final StorageService _storage;
   TimeRecordService(this._storage) {
-    loaded = _storage.loadRecordings().then((r) {
+    loaded = _storage.getAll().then((r) {
       if (r != null) {
         recordings = r;
       }
@@ -33,7 +33,7 @@ class TimeRecordService {
     if(!isRecording) return;
 
     currentRecord.endedAt = new DateTime.now();
-    _storage.save(recordings);
+    _storage.update(recordings.last);
   }
 
   void record(Dimension dimension){
@@ -43,7 +43,7 @@ class TimeRecordService {
     final now = new DateTime.now();
     final recording = new TimeRecord(startedAt: now, dimension: dimension);
     recordings.add(recording);
-    _storage.save(recordings);
+    _storage.push(recording);
   }
 
   Duration getTotalDuration(Dimension dimension) {

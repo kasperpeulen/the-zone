@@ -5,6 +5,9 @@ import 'package:the_zone/convert.dart';
 import 'package:dogma_convert/serialize.dart';
 
 class TimeRecord {
+  @Serialize.field('uid', optional: true)
+  String uid;
+
   @Serialize.field('startedAt')
   DateTime startedAt;
 

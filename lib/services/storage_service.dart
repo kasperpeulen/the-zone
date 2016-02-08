@@ -2,9 +2,9 @@ import 'dart:convert';
 import 'dart:async';
 
 import 'package:angular2/core.dart';
-import 'package:the_zone/models/time_record.dart';
 import 'package:firebase/firebase.dart';
 import 'package:github/browser.dart';
+import 'package:the_zone/models.dart';
 
 @Injectable()
 class StorageService {
@@ -13,16 +13,34 @@ class StorageService {
 
   StorageService(this._firebase, this._auth);
 
-  void save(List<TimeRecord> recordings) {
-    final authData = _firebase.getAuth();
-    _firebase
-        .child("users")
-        .child(authData['uid'])
-        .child('recordings')
-        .set(JSON.decode(JSON.encode(recordings)));
+  Map _clone(data){
+    return JSON.decode(JSON.encode(data));
   }
 
-  Future<List<TimeRecord>> loadRecordings() async {
+  void update(TimeRecord recording) {
+    final auth = _firebase.getAuth();
+    final data = _clone(recording);
+    _firebase
+        .child('users')
+        .child(auth['uid'])
+        .child('recordings')
+        .child(recording.uid)
+        .set(data);
+  }
+
+  void push(TimeRecord recording){
+    final auth = _firebase.getAuth();
+    final ref = _firebase
+        .child('users')
+        .child(auth['uid'])
+        .child('recordings')
+        .push();
+
+    recording.uid = ref.key;
+    ref.set(_clone(recording));
+  }
+
+  Future<List<TimeRecord>> getAll() async {
     if (_auth.isToken) {
       final authData = _firebase.getAuth();
 
@@ -31,7 +49,9 @@ class StorageService {
           .child(authData['uid'])
           .child('recordings')
           .once("value");
-      return snapshot.val()?.map((r) => new TimeRecord.fromJson(r))?.toList();
+
+      Map data = snapshot.val();
+      return data?.keys?.map((k) => new TimeRecord.fromJson(data[k]))?.toList();
     }
     return null;
   }
