@@ -26,7 +26,10 @@ class MainComponent {
   List<TimeRecord> get recordings => _recorder.recordings;
 
   void activate(Dimension dimension) {
-    _recorder.dimensionIsClicked(dimension);
+    bool isCurrent = isRecording(dimension);
+    _recorder.stop();
+    if(isCurrent) return;
+    _recorder.record(dimension);
   }
 
   bool isRecording(Dimension dimension) {

@@ -15,7 +15,7 @@ class TimeRecordService {
     });
   }
 
-  /// Returnrs when data is fetched from firebase.
+  /// Returns when data is fetched from firebase.
   Future loaded;
 
   List<TimeRecord> recordings = [];
@@ -25,22 +25,24 @@ class TimeRecordService {
   TimeRecord get currentRecord =>
       recordings.isEmpty || recordings.last.hasEnded ? null : recordings.last;
 
-  void dimensionIsClicked(Dimension dimension) {
-    if (currentRecord != null) {
-      // end the record
-      currentRecord.endedAt = new DateTime.now();
+  /// Verifies if there's a recording in progress
+  bool get isRecording => currentRecord != null;
 
-      // don't create a new timer when the dimension clicked
-      // is the same as the currentRecord
-      if (recordings.last.dimension == dimension){
-        _storage.save(recordings);
-        return;
-      }
-    }
+  /// Stops and saves the current recording
+  void stop(){
+    if(!isRecording) return;
 
-    recordings.add(
-        new TimeRecord(startedAt: new DateTime.now(), dimension: dimension));
+    currentRecord.endedAt = new DateTime.now();
+    _storage.save(recordings);
+  }
 
+  void record(Dimension dimension){
+    if(isRecording)
+      throw "There's a recording in progress already";
+
+    final now = new DateTime.now();
+    final recording = new TimeRecord(startedAt: now, dimension: dimension);
+    recordings.add(recording);
     _storage.save(recordings);
   }
 
