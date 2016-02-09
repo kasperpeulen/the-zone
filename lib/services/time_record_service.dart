@@ -28,15 +28,14 @@ class TimeRecordService {
   void stop() {
     if (!isRecording) return;
     final recording = currentRecord;
-    recording.endedAt = new DateTime.now();
+    recording.endedAt = new DateTime.now().toUtc();
     _storage.update(recording);
   }
 
   void record(Dimension dimension) {
     if (isRecording) throw "There's a recording in progress already";
 
-    final now = new DateTime.now();
-    final recording = new TimeRecord(startedAt: now, dimension: dimension);
+    final recording = new TimeRecord(dimension: dimension);
     _storage.push(recording);
   }
 
@@ -55,7 +54,7 @@ class TimeRecordService {
         .map((d) => getTotalDuration(d))
         .reduce((v, e) => v + e);
     final duration = getTotalDuration(dimension);
-    num result = duration.inSeconds / total.inSeconds;
+    final result = duration.inSeconds / total.inSeconds;
     return result.isNaN ? 0 : result;
   }
 

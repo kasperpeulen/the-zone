@@ -1,3 +1,6 @@
+analyzer:
+  strong-mode:
+    true
 linter:
   rules:
   # Effective Dart Rules
