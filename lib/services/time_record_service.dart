@@ -8,10 +8,13 @@ import 'dart:async';
 class TimeRecordService {
   final StorageService _storage;
 
-  TimeRecordService(this._storage);
+  TimeRecordService(this._storage) {
+    _storage.loaded.then((_) => _recordingsLoaded = true);
+  }
 
-  /// Returns when data is fetched from firebase.
-  Future loaded;
+  bool _recordingsLoaded = false;
+
+  bool get recordingsLoaded => _recordingsLoaded;
 
   /// Returns all recordings
   List<TimeRecord> get recordings => _storage.recordings;
@@ -40,7 +43,7 @@ class TimeRecordService {
   }
 
   Duration getTotalDuration(Dimension dimension) {
-    Duration duration = new Duration(seconds: 0);
+    var duration = new Duration(seconds: 0);
     for (TimeRecord record in recordings) {
       if (record.duration != null && record.dimension == dimension) {
         duration += record.duration;

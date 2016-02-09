@@ -1,35 +1,35 @@
-<div id="top-right">
-  <login *ngIf="!isLoggedIn" class="btn btn-default" (click)="login()">Login
-  </login>
-  <logout *ngIf="isLoggedIn">
-    <div class="btn btn-default" (click)="logout()">Logout</div>
-    <div>Welcome {{username}}!</div>
-  </logout>
+<spinner *ngIf="!recordingsLoaded"></spinner>
+<div *ngIf="recordingsLoaded">
+  <div id="top-right">
+    <login *ngIf="!isLoggedIn" class="btn btn-default" (click)="login()">Login
+    </login>
+    <logout *ngIf="isLoggedIn">
+      <div class="btn btn-default" (click)="logout()">Logout</div>
+      <div>Welcome {{username}}! Version: 0.0.19</div>
+    </logout>
+  </div>
+    <div *ngIf="isLoggedIn">
+    <dimension
+        class="btn btn-default"
+        *ngFor="#dimension of dimensions"
+        (click)="activate(dimension)"
+        [class.active]="isRecording(dimension)"
+    >
+      <dimension-name>{{dimension | getDimensionName}}</dimension-name>
+      <dimension-data>
+        <div>{{getTotalDuration(dimension)}}</div>
+        <div>{{getPercentageDuration(dimension) | percent: '.0-0'}}</div>
+      </dimension-data>
+    </dimension>
+
+    <h1>Records</h1>
+    <ul>
+      <li *ngFor="#record of recordings">
+        Dimension: {{record.dimension}}<br>
+        Started At: {{record.startedAt}}<br>
+        Ended At: {{record.endedAt}}
+      </li>
+    </ul>
+    <button class="btn btn-default" (click)="resetRecordings()">Reset</button>
+  </div>
 </div>
-
-<div *ngIf="isLoggedIn">
-  <dimension
-
-      class="btn btn-default"
-      *ngFor="#dimension of dimensions"
-      (click)="activate(dimension)"
-      [class.active]="isRecording(dimension)"
-  >
-    <dimension-name>{{dimension | getDimensionName}}</dimension-name>
-    <dimension-data>
-      <div>{{getTotalDuration(dimension)}}</div>
-      <div>{{getPercentageDuration(dimension) | percent: '.0-0'}}</div>
-    </dimension-data>
-  </dimension>
-
-  <h1>Records</h1>
-  <ul>
-    <li *ngFor="#record of recordings">
-      Dimension: {{record.dimension}}<br>
-      Started At: {{record.startedAt}}<br>
-      Ended At: {{record.endedAt}}
-    </li>
-  </ul>
-  <button class="btn btn-default" (click)="resetRecordings()">Reset</button>
-</div>
-

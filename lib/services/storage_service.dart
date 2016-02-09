@@ -5,23 +5,36 @@ import 'package:angular2/core.dart';
 import 'package:firebase/firebase.dart';
 import 'package:github/browser.dart' hide Event;
 import 'package:the_zone/models.dart';
+import 'package:the_zone/models/time_record.dart';
+import 'dart:async';
+import 'package:the_zone/services/connection_service.dart';
 
 @Injectable()
 class StorageService {
   final Firebase _firebase;
   final Authentication _auth;
-  List<TimeRecord> recordings = [];
+  final ConnectionService _connection;
 
-  StorageService(this._firebase, this._auth) {
+  StorageService(this._firebase, this._auth, this._connection) {
     if (_auth.isToken) {
-      if (!window.navigator.onLine) {
-        _loadOffline();
-      }
       _fbRecordingsChild.onChildAdded.listen(_onChildAdded);
       _fbRecordingsChild.onChildChanged.listen(_onChildChanged);
       _fbRecordingsChild.onChildRemoved.listen(_onChildRemoved);
+
+      if (_connection.offLine) {
+        _loadOffline();
+        loaded = new Future(() {});
+      }
+      loaded = _connection.connectedToFB.firstWhere((b) => b == true);
     }
+    loaded = new Future(() {});
   }
+
+  List<TimeRecord> recordings = [];
+
+  /// Returns when data is fetched from firebase.
+  /// Or in offline mode, from localStorage.
+  Future loaded;
 
   Firebase get _fbRecordingsChild {
     final auth = _firebase.getAuth();
