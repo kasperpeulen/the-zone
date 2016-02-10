@@ -9,14 +9,17 @@ import 'package:github/browser.dart';
 import 'package:the_zone/services/auth_service.dart';
 import 'package:the_zone/services/storage_service.dart';
 import 'package:angular2/router.dart';
+import 'package:the_zone/services/connection_service.dart';
 
 Future main() async {
+  await new Future.delayed(new Duration(seconds: 2));
   final firebase = new Firebase('http://the-zone.firebaseio.com/');
 
   await bootstrap(BodyComponent, [
     ROUTER_PROVIDERS,
     provide(LocationStrategy, useClass: HashLocationStrategy),
     TimeRecordService,
+    ConnectionService,
     AuthService,
     StorageService,
     provide(Firebase, useValue: firebase),
@@ -38,7 +41,6 @@ Future<Authentication> bootstrapAuth(Firebase firebase) async {
 
     // TODO: need to find out why this is needed
     // and how it can be done better
-    await new Future.delayed(new Duration(milliseconds: 500));
     return new Authentication.withToken(authData['github']['accessToken']);
   } else {
     return new Authentication.anonymous();

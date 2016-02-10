@@ -7,45 +7,43 @@ import 'dart:async';
 @Injectable()
 class TimeRecordService {
   final StorageService _storage;
+
   TimeRecordService(this._storage) {
-    loaded = _storage.loadRecordings().then((r) {
-      if (r != null) {
-        recordings = r;
-      }
-    });
+    _storage.loaded.then((_) => _recordingsLoaded = true);
   }
 
-  /// Returnrs when data is fetched from firebase.
-  Future loaded;
+  bool _recordingsLoaded = false;
 
-  List<TimeRecord> recordings = [];
+  bool get recordingsLoaded => _recordingsLoaded;
+
+  /// Returns all recordings
+  List<TimeRecord> get recordings => _storage.recordings;
 
   /// The current time record. Returns null if there are no records yet,
   /// or if the last record is already ended.
   TimeRecord get currentRecord =>
-      recordings.isEmpty || recordings.last.hasEnded ? null : recordings.last;
+      recordings.firstWhere((r) => !r.hasEnded, orElse: () => null);
 
-  void dimensionIsClicked(Dimension dimension) {
-    if (currentRecord != null) {
-      // end the record
-      currentRecord.endedAt = new DateTime.now();
+  /// Verifies if there's a recording in progress
+  bool get isRecording => currentRecord != null;
 
-      // don't create a new timer when the dimension clicked
-      // is the same as the currentRecord
-      if (recordings.last.dimension == dimension){
-        _storage.save(recordings);
-        return;
-      }
-    }
+  /// Stops and saves the current recording
+  void stop() {
+    if (!isRecording) return;
+    final recording = currentRecord;
+    recording.endedAt = new DateTime.now().toUtc();
+    _storage.update(recording);
+  }
 
-    recordings.add(
-        new TimeRecord(startedAt: new DateTime.now(), dimension: dimension));
+  void record(Dimension dimension) {
+    if (isRecording) throw "There's a recording in progress already";
 
-    _storage.save(recordings);
+    final recording = new TimeRecord(dimension: dimension);
+    _storage.push(recording);
   }
 
   Duration getTotalDuration(Dimension dimension) {
-    Duration duration = new Duration(seconds: 0);
+    var duration = new Duration(seconds: 0);
     for (TimeRecord record in recordings) {
       if (record.duration != null && record.dimension == dimension) {
         duration += record.duration;
@@ -59,12 +57,9 @@ class TimeRecordService {
         .map((d) => getTotalDuration(d))
         .reduce((v, e) => v + e);
     final duration = getTotalDuration(dimension);
-    num result = duration.inSeconds / total.inSeconds;
+    final result = duration.inSeconds / total.inSeconds;
     return result.isNaN ? 0 : result;
   }
 
-  void resetRecordings() {
-    recordings = [];
-    _storage.reset();
-  }
+  void resetRecordings() => _storage.reset();
 }

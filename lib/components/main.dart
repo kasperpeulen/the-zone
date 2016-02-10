@@ -6,11 +6,14 @@ import 'package:the_zone/services/time_record_service.dart';
 import 'package:the_zone/models/time_record.dart';
 import 'package:the_zone/services/auth_service.dart';
 import 'package:the_zone/models/dimension.dart';
+import 'package:the_zone/components/spinner.dart';
+import 'package:the_zone/services/connection_service.dart';
 
 @Component(
     selector: 'main',
     templateUrl: 'main.html',
     styleUrls: const ['main.css'],
+    directives: const [SpinnerComponent],
     pipes: const [GetDimensionName])
 class MainComponent {
   final TimeRecordService _recorder;
@@ -21,12 +24,17 @@ class MainComponent {
     new Timer.periodic(new Duration(seconds: 1), (_) {});
   }
 
+  bool get recordingsLoaded => _recorder.recordingsLoaded;
+
   final List<Dimension> dimensions = Dimension.values;
 
   List<TimeRecord> get recordings => _recorder.recordings;
 
   void activate(Dimension dimension) {
-    _recorder.dimensionIsClicked(dimension);
+    bool isCurrent = isRecording(dimension);
+    _recorder.stop();
+    if (isCurrent) return;
+    _recorder.record(dimension);
   }
 
   bool isRecording(Dimension dimension) {

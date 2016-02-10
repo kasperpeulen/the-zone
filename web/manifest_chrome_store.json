@@ -1,0 +1,20 @@
+{
+  "short_name": "The Zone",
+  "name": "The Zone",
+  "version": "0.0.1",
+  "description": "Track how much time you spend in the dimensions of life.",
+  "manifest_version": 2,
+  "icons": {
+    "48": "img/icon-48.png",
+    "64": "img/icon-64.png",
+    "128": "img/icon-128.png",
+    "256": "img/icon-256.png",
+    "512": "img/icon-512.png"
+  },
+  "offline_enabled": true,
+  "app": {
+    "launch": {
+      "web_url": "https://the-zone.firebaseapp.com/"
+    }
+  }
+}

@@ -6,7 +6,7 @@ import 'package:dogma_convert/serialize.dart';
 
 class TimeRecord {
   @Serialize.field('startedAt')
-  DateTime startedAt;
+  DateTime startedAt = new DateTime.now().toUtc();
 
   @Serialize.field('dimension')
   Dimension dimension;
@@ -14,7 +14,9 @@ class TimeRecord {
   @Serialize.field('endedAt', optional: true)
   DateTime endedAt;
 
-  TimeRecord({this.startedAt, this.dimension});
+  String get uid => startedAt.millisecondsSinceEpoch.toString();
+
+  TimeRecord({this.dimension});
 
   factory TimeRecord.fromJson(Map input) =>
       new TimeRecordDecoder().convert(input);
@@ -23,7 +25,7 @@ class TimeRecord {
 
   Duration get duration {
     if (endedAt == null) {
-      return new DateTime.now().difference(startedAt);
+      return new DateTime.now().toUtc().difference(startedAt);
     }
     return endedAt.difference(startedAt);
   }
