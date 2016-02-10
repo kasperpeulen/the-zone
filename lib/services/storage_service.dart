@@ -8,26 +8,37 @@ import 'package:the_zone/models.dart';
 import 'package:the_zone/models/time_record.dart';
 import 'dart:async';
 import 'package:the_zone/services/connection_service.dart';
+import 'package:logging/logging.dart';
 
 @Injectable()
 class StorageService {
   final Firebase _firebase;
   final Authentication _auth;
   final ConnectionService _connection;
+  final Logger _log;
 
-  StorageService(this._firebase, this._auth, this._connection) {
+  StorageService(this._firebase, this._auth, this._connection, this._log) {
     if (_auth.isToken) {
-      _fbRecordingsChild.onChildAdded.listen(_onChildAdded);
-      _fbRecordingsChild.onChildChanged.listen(_onChildChanged);
-      _fbRecordingsChild.onChildRemoved.listen(_onChildRemoved);
-
       if (_connection.offLine) {
         _loadOffline();
+        _log.info('Loading records from local storage...');
         loaded = new Future(() {});
+      } else {
+        _log.info('Internet connection detected...\n'
+            'Attempting to load records from firebase...');
+        _fbRecordingsChild.onChildAdded.listen(_onChildAdded);
+        _fbRecordingsChild.onChildChanged.listen(_onChildChanged);
+        _fbRecordingsChild.onChildRemoved.listen(_onChildRemoved);
+
+        loaded = _connection.connectedToFB.firstWhere((b) {
+          _log.info('Loading records from firebase...');
+          return b == true;
+        });
       }
-      loaded = _connection.connectedToFB.firstWhere((b) => b == true);
+    } else {
+      _log.info('User is not logged in.');
+      loaded = new Future(() {});
     }
-    loaded = new Future(() {});
   }
 
   List<TimeRecord> recordings = [];

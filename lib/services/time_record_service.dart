@@ -2,13 +2,14 @@ import 'package:angular2/core.dart';
 import 'package:the_zone/models/time_record.dart';
 import 'package:the_zone/models/dimension.dart';
 import 'storage_service.dart';
-import 'dart:async';
+import 'package:logging/logging.dart';
 
 @Injectable()
 class TimeRecordService {
   final StorageService _storage;
+  final Logger _log;
 
-  TimeRecordService(this._storage) {
+  TimeRecordService(this._storage, this._log) {
     _storage.loaded.then((_) => _recordingsLoaded = true);
   }
 

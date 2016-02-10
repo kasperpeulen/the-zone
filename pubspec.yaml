@@ -10,6 +10,8 @@ dependencies:
   github: '^2.3.1+1'
   dogma_convert: '^0.0.1'
   dart_to_js_script_rewriter: '^0.1.0+4'
+  logging: '^0.11.2'
+  intl: '^0.12.7'
 dev_dependencies:
   grinder: '^0.8.0+2'
   git: '^0.4.4+2'

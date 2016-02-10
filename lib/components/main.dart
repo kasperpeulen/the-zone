@@ -7,7 +7,7 @@ import 'package:the_zone/models/time_record.dart';
 import 'package:the_zone/services/auth_service.dart';
 import 'package:the_zone/models/dimension.dart';
 import 'package:the_zone/components/spinner.dart';
-import 'package:the_zone/services/connection_service.dart';
+import 'package:logging/logging.dart';
 
 @Component(
     selector: 'main',
@@ -18,8 +18,10 @@ import 'package:the_zone/services/connection_service.dart';
 class MainComponent {
   final TimeRecordService _recorder;
   final AuthService _auth;
+  final Logger _log;
 
-  MainComponent(this._recorder, this._auth) {
+  MainComponent(this._recorder, this._auth, this._log) {
+    _log.fine('Routed to main component.');
     // update view periodic
     new Timer.periodic(new Duration(seconds: 1), (_) {});
   }

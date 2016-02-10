@@ -1,8 +1,7 @@
 import 'package:angular2/core.dart';
 import 'package:angular2/router.dart';
-import 'dart:async';
 import 'package:the_zone/components/main.dart';
-import 'package:the_zone/services/storage_service.dart';
+import 'package:logging/logging.dart';
 
 @Component(
     selector: 'app', templateUrl: 'body.html', styleUrls: const ['body.css'])
@@ -10,4 +9,10 @@ import 'package:the_zone/services/storage_service.dart';
   const Route(
       path: '', component: MainComponent, name: 'Main', useAsDefault: true),
 ])
-class BodyComponent {}
+class BodyComponent {
+  final Logger _log;
+
+  BodyComponent(this._log) {
+    _log.fine('BodyComponent loaded');
+  }
+}
